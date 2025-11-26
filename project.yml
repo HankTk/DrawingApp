@@ -1,0 +1,55 @@
+name: DrawingApp
+options:
+  bundleIdPrefix: com.drawingapp
+  deploymentTarget:
+    iOS: "16.0"
+  developmentLanguage: ja
+  xcodeVersion: "15.0"
+
+targets:
+  DrawingApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "16.0"
+    sources:
+      - path: DrawingApp
+        excludes:
+          - "*.xcodeproj"
+          - "*.xcworkspace"
+          - "*.md"
+          - "Makefile"
+          - "Package.swift"
+          - "project.yml"
+          - "run.sh"
+          - ".git"
+    resources:
+      - DrawingApp/Assets.xcassets
+      - Preview Content/Preview Assets.xcassets
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.drawingapp.DrawingApp
+      TARGETED_DEVICE_FAMILY: "2" # iPad only
+      SUPPORTED_PLATFORMS: iphonesimulator iphoneos
+      IPHONEOS_DEPLOYMENT_TARGET: "16.0"
+      SWIFT_VERSION: "5.0"
+      DEVELOPMENT_TEAM: ""
+    info:
+      path: DrawingApp/Info.plist
+      properties:
+        UILaunchScreen: {}
+        UIRequiredDeviceCapabilities: [armv7]
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+
+schemes:
+  DrawingApp:
+    build:
+      targets:
+        DrawingApp: all
+    run:
+      config: Debug
+    test:
+      config: Debug
+
