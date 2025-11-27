@@ -198,32 +198,25 @@ class CanvasView: UIView {
         context.setFillColor(UIColor.white.cgColor)
         context.fill(rect)
         
-        // すべての通常のパスを描画
+        // すべてのパスを時系列順に描画（消しゴムパスと通常のパスを区別せずに）
+        // これにより、消しゴムパスが正しく機能し、消しゴムで消した部分の上に再度描画も可能
         if let viewModel = viewModel {
             for path in viewModel.paths {
-                if !path.isEraser {
+                if path.isEraser {
+                    drawEraserPath(path, in: context)
+                } else {
                     drawPath(path, in: context)
                 }
             }
         }
         
-        // 現在描画中の通常のパスを描画
-        if let currentPath = currentPath, !currentPath.isEraser {
-            drawPath(currentPath, in: context)
-        }
-        
-        // 消しゴムパスを描画（既存の描画を上書きして消去）
-        if let viewModel = viewModel {
-            for path in viewModel.paths {
-                if path.isEraser {
-                    drawEraserPath(path, in: context)
-                }
+        // 現在描画中のパスを描画
+        if let currentPath = currentPath {
+            if currentPath.isEraser {
+                drawEraserPath(currentPath, in: context)
+            } else {
+                drawPath(currentPath, in: context)
             }
-        }
-        
-        // 現在描画中の消しゴムパスを描画
-        if let currentPath = currentPath, currentPath.isEraser {
-            drawEraserPath(currentPath, in: context)
         }
     }
     
